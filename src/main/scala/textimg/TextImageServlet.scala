@@ -26,15 +26,38 @@ class TextImageServlet extends TextimgStack {
   }
  */
 
-  get("/") { html }
+  get("/*") { NotFound("""It's could not be found""") }
   get("/img", params.getOrElse("str", "").length != 0) {
     val imgType = "png"
     contentType = "image/" + imgType
-    Text2Image.makeImageByteArray(params.get("str") + "", None, None, extension = imgType)
+    Text2Image.makeImageByteArray(params.get("str"), None, None, extension = imgType)
   }
-  get("/img.png", params.getOrElse("str", "").length != 0) {
-    val imgType = "png"
-    contentType = "image/" + imgType
-    Text2Image.makeImageByteArray(params.get("str") + "", None, None, extension = imgType)
+
+  get("/img.:extension", params.getOrElse("str", "").length != 0) {
+    val imgType = params("extension")
+    val imgExtList: List[String] = List("png", "jpg", "jpeg", "gif")
+    if (imgExtList.exists { _.equalsIgnoreCase(imgType) }) {
+      contentType = "image/" + imgType
+      Text2Image.makeImageByteArray(params.get("str"), None, None, extension = imgType)
+    } else {
+      NotFound("""It's could not be found!""")
+    }
   }
+
+  get("/img/:extension", params.getOrElse("str", "").length != 0) {
+    val imgType = params("extension")
+    val imgExtList: List[String] = List("png", "jpg", "jpeg", "gif")
+    if (imgExtList.exists { _.equalsIgnoreCase(imgType) }) {
+      contentType = "image/" + imgType
+      Text2Image.makeImageByteArray(params.get("str"), None, None, extension = imgType)
+    } else {
+      NotFound("""It's could not be found!""")
+    }
+  }
+
+  //  get("/img.png", params.getOrElse("str", "").length != 0) {
+  //    val imgType = "png"
+  //    contentType = "image/" + imgType
+  //    Text2Image.makeImageByteArray(params.get("str") + "", None, None, extension = imgType)
+  //  }
 }

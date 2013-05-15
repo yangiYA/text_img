@@ -28,9 +28,9 @@ object Text2Image {
   }
 
   def makeImageByteArray(
-    str: String, color: Option[Color], backgroundColor: Option[Color], width: Int = 150, height: Int = 200, extension: String = "png"): Array[Byte] = {
+    str: Option[String], color: Option[Color], backgroundColor: Option[Color], width: Int = 150, height: Int = 200, extension: String = "png"): Array[Byte] = {
     val outputStream = new ByteArrayOutputStream
-    val bufferedImage = makeImage(str, color, backgroundColor, width, height)
+    val bufferedImage = makeImage(str.getOrElse(""), color, backgroundColor, width, height)
     ImageIO.write(bufferedImage, extension, outputStream);
     outputStream.toByteArray()
   }
@@ -45,10 +45,10 @@ object Text2Image {
       str match {
         case null => accumulator
         case "" => accumulator
-        case a if a.length() <= length => a :: a :: accumulator
+        case a if a.length() <= length => a :: accumulator
         case other => {
           val (fst, snd) = devide(str, length)
-          split_reflexive_reverced(snd, length, fst :: fst :: accumulator)
+          split_reflexive_reverced(snd, length, fst :: accumulator)
         }
       }
     }
@@ -60,6 +60,6 @@ object Text2Image {
       }
     }
 
-    split_reflexive_reverced(str, length)
+    split_reflexive_reverced(str, length).reverse
   }
 }
