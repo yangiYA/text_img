@@ -6,7 +6,6 @@
 $ cd textImg
 $ ./sbt
 > container:start
-> browse
 ```
 
-If `browse` doesn't launch your browser, manually open [http://localhost:8080/](http://localhost:8080/) in your browser.
+Launch your browser and open [http://localhost:8080/img.png?str=hogeFoo](http://localhost:8080/img.png?str=hogeFoo) in your browser.
