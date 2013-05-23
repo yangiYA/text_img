@@ -26,9 +26,10 @@
         </encoder>
     </appender>
 
-
-    <root level="info">
-        <appender-ref ref="STDOUT"/>
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" level="INFO"/>
+<!--
         <appender-ref ref="FILE" level="DEBUG"/>
+-->
     </root>
 </configuration>

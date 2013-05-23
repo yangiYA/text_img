@@ -29,6 +29,10 @@ class TextImageServlet extends TextimgStack {
     imageResult(Some(params("string")), params("extension"))
   }
 
+  get("/exception") {
+    throw new RuntimeException("path=/exception が要求されたので、例外を発生させました")
+  }
+
   private def imageByteArrayActionResult(string: Option[String], imageType: String) = {
     contentType = "image/" + imageType.toLowerCase()
     Text2Image.makeImageByteArray(string, None, None, extension = imageType)
